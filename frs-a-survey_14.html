@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filial Responsibility Scale – Adult (FRS-A)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ===== COLOR PALETTE ===== */
+:root {
+  --bg:            #FAF6F1;
+  --surface:       #FFFFFF;
+  --surface-alt:   #F5EDE4;
+  --accent:        #8B4A2C;
+  --accent-mid:    #B5623C;
+  --accent-lite:   #F0E0D5;
+  --accent-pale:   #FBF4F0;
+  --deep:          #2C1810;
+  --body-text:     #4A3025;
+  --mid:           #7A5040;
+  --muted:         #A8887A;
+  --border:        #E8D5C8;
+  --border-str:    #D4B8A8;
+  --success:       #4A7C59;
+  --warn:          #9C6B2E;
+  --danger:        #B03030;
+  --danger-bg:     #FFF0F0;
+  --danger-border: #E8A0A0;
+  --warn-bg:       #FFF8EE;
+  --warn-border:   #E8C068;
+  --success-bg:    #F0F7F2;
+  --success-border:#A8D4B4;
+}
+
+/* ===== BASE ===== */
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--deep);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+.wrap { max-width: 700px; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+#app { animation: fadeIn .3s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TYPOGRAPHY ===== */
+.page-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent-mid); margin-bottom: .5rem;
+}
+h1 {
+  font-family: 'Lora', serif; font-size: 1.65rem; font-weight: 600;
+  line-height: 1.25; color: var(--deep); margin-bottom: .5rem;
+}
+h2 {
+  font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 600;
+  color: var(--deep); margin-bottom: .75rem;
+}
+.subtitle { font-size: 14px; color: var(--muted); margin-bottom: 1.75rem; }
+p { font-size: 15px; line-height: 1.8; color: var(--body-text); margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 1.75rem 0; }
+
+/* ===== CALLOUT BOXES ===== */
+.callout {
+  background: var(--accent-pale); border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+}
+.callout-title { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: .4rem; }
+.callout p { font-size: 15px; color: var(--mid); }
+
+/* ===== SECTION BANNER ===== */
+.section-banner {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-mid) 100%);
+  color: #fff; border-radius: 10px; padding: 1.1rem 1.4rem; margin-bottom: 1.75rem;
+}
+.section-banner h2 {
+  font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 600;
+  margin-bottom: .2rem; color: #fff;
+}
+.section-banner p { font-size: 13px; color: rgba(255,255,255,.85); margin-bottom: 0; }
+
+/* ===== PROGRESS BAR ===== */
+.progress-wrap { margin-bottom: 2.25rem; }
+.progress-label {
+  display: flex; justify-content: space-between; font-size: 12px;
+  color: var(--muted); margin-bottom: 8px; font-weight: 500;
+  letter-spacing: .03em; text-transform: uppercase;
+}
+.progress-bar { height: 3px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-mid));
+  border-radius: 99px; transition: width .5s cubic-bezier(.4,0,.2,1);
+}
+
+/* ===== SCALE LEGEND — enlarged ===== */
+.scale-legend {
+  display: flex;
+  background: var(--surface-alt);
+  border: 1px solid var(--border-str);
+  border-radius: 10px;
+  padding: .9rem 1rem;
+  margin-bottom: 1.75rem;
+  gap: 4px;
+}
+.scale-legend-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+.scale-legend-num {
+  width: 36px; height: 36px;
+  border-radius: 7px;
+  background: var(--surface);
+  border: 1.5px solid var(--border-str);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700;
+  color: var(--mid);
+}
+.scale-legend-lbl {
+  font-size: 11px;
+  color: var(--mid);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* ===== QUESTIONS ===== */
+.q-item { padding: 1.1rem 0; border-bottom: 1px solid var(--border); }
+.q-item:last-child { border-bottom: none; }
+.q-text { font-size: 15px; line-height: 1.65; color: var(--deep); margin-bottom: .75rem; }
+.q-num { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .04em; margin-right: .3em; }
+
+/* ===== LIKERT — EQUAL-SIZE SQUARE BUTTONS, NO LABELS ===== */
+.likert {
+  display: flex;
+  gap: 4px;       /* matches scale-legend gap so columns align */
+}
+.likert label {
+  flex: 1;        /* each button stretches to equal share of row width */
+  cursor: pointer;
+}
+.likert input[type="radio"] { display: none; }
+.likert .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 38px;
+  border-radius: 7px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  transition: all .15s;
+  cursor: pointer;
+}
+.likert .btn .val {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--muted);
+  line-height: 1;
+  pointer-events: none;
+}
+/* Selected */
+.likert input:checked + .btn {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(139,74,44,.25);
+}
+.likert input:checked + .btn .val { color: #fff; }
+/* Hover (unselected) */
+.likert label:hover .btn {
+  border-color: var(--accent-mid);
+  background: var(--accent-lite);
+}
+.likert label:hover .btn .val { color: var(--accent); }
+
+/* Validation highlight */
+.q-item.unanswered .q-text { color: var(--danger); }
+.q-item.unanswered .likert .btn { border-color: var(--danger-border); }
+
+/* ===== VALIDATION NOTE ===== */
+.unans-note {
+  display: none; background: var(--danger-bg); border: 1px solid var(--danger-border);
+  border-radius: 8px; padding: .75rem 1rem; font-size: 13px;
+  color: var(--danger); margin-top: 1rem;
+}
+
+/* ===== BUTTONS ===== */
+.btn-row {
+  display: flex; gap: .75rem; margin-top: 2rem;
+  justify-content: space-between; align-items: center;
+}
+.btn-primary {
+  background: var(--accent); color: #fff; border: none; padding: .75rem 2rem;
+  border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+  font-weight: 600; cursor: pointer; transition: background .15s, transform .1s;
+  letter-spacing: .02em;
+}
+.btn-primary:hover { background: var(--accent-mid); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-secondary {
+  background: transparent; color: var(--mid); border: 1.5px solid var(--border-str);
+  padding: .75rem 1.4rem; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; cursor: pointer; transition: all .15s;
+}
+.btn-secondary:hover { background: var(--surface-alt); }
+.btn-start {
+  background: var(--accent); color: #fff; border: none; padding: .85rem 2.5rem;
+  border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 15px;
+  font-weight: 600; cursor: pointer; letter-spacing: .02em; transition: all .2s; margin-top: 1rem;
+}
+.btn-start:hover {
+  background: var(--accent-mid); transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(139,74,44,.25);
+}
+.btn-reset {
+  background: var(--surface-alt); color: var(--mid); border: 1.5px solid var(--border-str);
+  padding: .7rem 1.5rem; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; cursor: pointer; margin-top: 1.5rem; transition: all .15s;
+}
+.btn-reset:hover { background: var(--border); }
+
+/* ===== TRANSITION PAGE ===== */
+.transition-card {
+  background: linear-gradient(135deg, var(--accent) 0%, #6B3020 100%);
+  border-radius: 14px;
+  padding: 2.5rem 2rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.transition-card::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: rgba(255,255,255,.06); border-radius: 50%;
+}
+.transition-card::after {
+  content: '';
+  position: absolute; bottom: -30px; left: -20px;
+  width: 100px; height: 100px;
+  background: rgba(255,255,255,.05); border-radius: 50%;
+}
+.transition-card .t-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; opacity: .7; margin-bottom: .75rem;
+}
+.transition-card h2 {
+  font-family: 'Lora', serif; font-size: 1.55rem; font-weight: 600;
+  color: #fff; margin-bottom: .75rem; line-height: 1.3;
+}
+.transition-card p {
+  font-size: 14px; color: rgba(255,255,255,.85);
+  max-width: 480px; margin: 0 auto;
+}
+.transition-divider {
+  display: flex; align-items: center; gap: 1rem;
+  margin: 1.75rem 0;
+}
+.transition-divider hr { flex: 1; border: none; border-top: 1px solid var(--border); }
+.transition-divider span {
+  font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted); white-space: nowrap;
+}
+.part-summary {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;
+}
+@media (max-width: 480px) { .part-summary { grid-template-columns: 1fr; } }
+.part-summary-card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 1rem 1.1rem;
+}
+.part-summary-card .ps-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .07em; margin-bottom: .3rem;
+}
+.part-summary-card.done .ps-label { color: var(--success); }
+.part-summary-card.next .ps-label { color: var(--accent-mid); }
+.part-summary-card .ps-title {
+  font-family: 'Lora', serif; font-size: 1rem; font-weight: 600;
+  color: var(--deep); margin-bottom: .3rem;
+}
+.part-summary-card p { font-size: 13px; color: var(--mid); margin-bottom: 0; }
+
+/* ===== DEMOGRAPHICS ===== */
+.demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+@media (max-width: 480px) { .demo-grid { grid-template-columns: 1fr; } }
+.field-group { display: flex; flex-direction: column; gap: .4rem; }
+.field-group label {
+  font-size: 12px; font-weight: 600; color: var(--mid);
+  letter-spacing: .03em; text-transform: uppercase;
+}
+.field-group select, .field-group input {
+  font-family: 'DM Sans', sans-serif; font-size: 14px; padding: .6rem .85rem;
+  border: 1.5px solid var(--border); border-radius: 7px; background: var(--surface);
+  color: var(--deep); outline: none; transition: border-color .15s;
+  -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A8887A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .75rem center; padding-right: 2rem;
+}
+.field-group input { background-image: none; padding-right: .85rem; }
+.field-group.full { grid-column: 1 / -1; }
+.field-group select:focus, .field-group input:focus { border-color: var(--accent); }
+.demo-optional { font-size: 12.5px; color: var(--muted); font-style: italic; margin-bottom: 1.25rem; }
+
+/* ===== RESULTS HEADER ===== */
+.results-header {
+  background: linear-gradient(135deg, var(--accent) 0%, #6B3020 100%);
+  color: #fff; border-radius: 14px; padding: 1.75rem 1.75rem 1.5rem;
+  margin-bottom: 2rem; position: relative; overflow: hidden;
+}
+.results-header::before {
+  content: ''; position: absolute; top: -30px; right: -30px;
+  width: 140px; height: 140px; background: rgba(255,255,255,.07); border-radius: 50%;
+}
+.results-header .eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; opacity: .75; margin-bottom: .5rem;
+}
+.results-header h2 {
+  font-family: 'Lora', serif; font-size: 1.45rem; font-weight: 600;
+  margin-bottom: .3rem; color: #fff;
+}
+.results-header .meta { font-size: 13px; opacity: .75; }
+
+/* ===== RESULTS SECTION LABEL ===== */
+.results-section-label {
+  font-family: 'Lora', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--deep);
+  margin-bottom: 1rem;
+  padding-bottom: .6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ===== SCORE CARDS — 3-column grid ===== */
+.score-grid-3 {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: .85rem; margin-bottom: 1.75rem;
+}
+@media (max-width: 560px) { .score-grid-3 { grid-template-columns: 1fr; } }
+
+.score-card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 1rem 1.1rem;
+}
+.score-card .sc-label {
+  font-size: 11px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .07em; margin-bottom: .25rem;
+}
+.score-card .sc-type { font-size: 12px; color: var(--mid); margin-bottom: .6rem; line-height: 1.35; }
+.score-card .sc-score {
+  font-family: 'Lora', serif; font-size: 1.9rem; font-weight: 600;
+  color: var(--accent); line-height: 1; margin-bottom: .5rem;
+}
+.score-card .sc-score span { font-size: .9rem; color: var(--muted); font-family: 'DM Sans'; }
+.sc-bar { height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: .45rem; }
+.sc-bar-fill { height: 100%; border-radius: 99px; transition: width .8s cubic-bezier(.4,0,.2,1); }
+.sc-level { font-size: 11.5px; font-weight: 600; letter-spacing: .03em; }
+.level-low  { color: var(--success); }
+.level-mod  { color: var(--warn); }
+.level-high { color: var(--danger); }
+.fill-low   { background: var(--success); }
+.fill-mod   { background: var(--warn); }
+.fill-high  { background: var(--danger); }
+.sc-desc {
+  font-size: 14px; color: var(--body-text); line-height: 1.65;
+  margin-top: .65rem; padding-top: .65rem; border-top: 1px solid var(--border);
+}
+
+/* ===== PATTERN CARDS ===== */
+.pattern-card {
+  border-radius: 10px; padding: 1.1rem 1.25rem;
+  margin-bottom: .85rem; border: 1.5px solid;
+}
+.pattern-card.safe    { background: var(--success-bg);  border-color: var(--success-border); }
+.pattern-card.caution { background: var(--warn-bg);     border-color: var(--warn-border); }
+.pattern-card.concern { background: var(--danger-bg);   border-color: var(--danger-border); }
+.pattern-card .p-title { font-size: 14px; font-weight: 700; margin-bottom: .4rem; }
+.pattern-card.safe    .p-title { color: var(--success); }
+.pattern-card.caution .p-title { color: var(--warn); }
+.pattern-card.concern .p-title { color: var(--danger); }
+.pattern-card p { font-size: 15px; margin-bottom: 0; }
+
+/* ===== CLINICAL NOTE ===== */
+.clinical-note {
+  background: var(--accent-pale); border-radius: 10px;
+  padding: 1.25rem 1.4rem; margin-bottom: 1.5rem;
+  border: 1.5px solid var(--accent-lite);
+}
+.clinical-note .cn-title {
+  font-size: 14px; font-weight: 700; color: var(--accent);
+  margin-bottom: .5rem; letter-spacing: .02em;
+}
+.clinical-note p { font-size: 15px; }
+
+/* ===== DISCLAIMER ===== */
+.disclaimer {
+  font-size: 14px; color: var(--muted); line-height: 1.75;
+  border-top: 1px solid var(--border); padding-top: 1.25rem; margin-top: 1.25rem;
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="app"></div>
+</div>
+
+<script>
+
+// ─── Questions ────────────────────────────────────────────────────────────────
+
+const PAST_Q = [
+  "I did a lot of the shopping (e.g., for groceries or clothes) for my family.",
+  "At times I felt I was the only one my mother or father could turn to.",
+  "I helped my brothers or sisters a lot with their homework.",
+  "Even though my parents meant well, I couldn't really depend on them to meet my needs.",
+  "In my family, I was often described as being mature for my age.",
+  "I was frequently responsible for the physical care of some member of my family (e.g., washing, feeding, or dressing him or her).",
+  "It often seemed that my feelings weren't taken into account in my family.",
+  "I worked to help make money for my family.",
+  "I often felt like a referee in my family.",
+  "I often felt let down by members of my family.",
+  "In my family I often made sacrifices that went unnoticed.",
+  "It seemed like family members were always bringing me their problems.",
+  "I often did the family's laundry.",
+  "If a member of my family were upset, I usually didn't get involved.",
+  "My parents were very helpful when I had a problem.",
+  "In my house I rarely did the cooking.",
+  "My parents often tried to get me to take their side in conflicts.",
+  "Even when my family did not need my help, I felt very responsible for them.",
+  "I was rarely asked to look after my siblings.",
+  "Sometimes it seemed that I was more responsible than my parents were.",
+  "Members of my family understood me pretty well.",
+  "My parents expected me to help discipline my siblings.",
+  "My parents often criticized my efforts to help out at home.",
+  "I often felt that my family could not get along without me.",
+  "For some reason it was hard for me to trust my parents.",
+  "I often felt caught in the middle of my parents' conflicts.",
+  "I helped manage my family's financial affairs (e.g., making decisions about purchases or paying bills).",
+  "In my family, I often gave more than I received.",
+  "It was hard sometimes to keep up in school because of my responsibilities at home.",
+  "I often felt more like an adult than a child in my family."
+];
+
+const CURR_Q = [
+  "At times I feel I am the only one my mother or father can turn to.",
+  "I rarely find it necessary to help members of my family of origin with their household chores.",
+  "Even though my parents mean well, I can't really depend on them to be there for me when I need them.",
+  "I often feel guilty when doing things that don't involve my family of origin.",
+  "My parents often seem so disappointed in me.",
+  "I often feel that my family of origin could not get along without me.",
+  "I sometimes give money to members of my family of origin to help them out.",
+  "There are certain members of my family of origin I can handle better than anyone else.",
+  "My parents expect me to help manage my siblings.",
+  "I often feel let down by members of my family of origin.",
+  "It is hard for me to enjoy myself knowing that members of my family of origin are unhappy.",
+  "I help my brothers or sisters a lot with their job responsibilities.",
+  "In my family of origin, I often make sacrifices that go unnoticed by other family members.",
+  "It is sometimes hard to keep up with my own duties at home or work because of my responsibilities to my family of origin.",
+  "I am very uncomfortable when things are not going well for members of my family of origin.",
+  "Members of my family of origin understand me pretty well.",
+  "It often seems that my feelings aren't taken into account in my family of origin.",
+  "In my mind, the welfare of my family of origin is my first priority.",
+  "I am very active in managing the financial affairs (e.g., making decisions about purchases, paying bills) of a member of my family of origin.",
+  "I often do the laundry for a member of my family of origin.",
+  "For some reason it is hard for me to trust my parents.",
+  "It seems that members of my family of origin are always bringing me their problems.",
+  "I do a lot of the shopping (e.g., for groceries or clothes) for one or more members of my family of origin.",
+  "My parents are very helpful when I have a problem.",
+  "I am frequently responsible for the physical care of some member of my family of origin (e.g., washing, feeding, or dressing him or her).",
+  "If a member of my family of origin is upset, I usually don't get involved.",
+  "I often feel like I am the adult, and my parents are the children.",
+  "Even when members of my family of origin do not need my help, I feel very responsible for them.",
+  "I hardly ever have to do the cooking for a member of my family of origin.",
+  "Sometimes it seems that I am more responsible than my parents."
+];
+
+const ALL_Q = [...PAST_Q, ...CURR_Q];
+
+// ─── Scoring Keys (0-indexed) ─────────────────────────────────────────────────
+const PI_IDX = [0, 2, 5, 7, 12, 15, 18, 21, 26, 28];
+const PE_IDX = [1, 4, 8, 11, 13, 16, 17, 23, 25, 29];
+const PU_IDX = [3, 6, 9, 10, 14, 19, 20, 22, 24, 27];
+const CI_IDX = [31, 36, 38, 41, 43, 48, 49, 52, 54, 58];
+const CE_IDX = [30, 33, 35, 37, 40, 44, 47, 51, 55, 57];
+const CU_IDX = [32, 34, 39, 42, 45, 46, 50, 53, 56, 59];
+const REVERSE = new Set([13, 14, 15, 18, 20, 31, 45, 53, 55, 58]);
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let state = {
+  page: 0,          // 0=intro, 1-3=past, 'T'=transition, 4-6=current, 7=demo
+  answers: new Array(60).fill(null),
+  demographics: {
+    age: '', gender: '', education: '', religion: '',
+    birthOrder: '', siblings: '', parentsDivorced: false, custody: '',
+    name: '', email: '', therapistEmail: '',
+    ministry: '', ministryOther: '', researchContact: false
+  },
+  showResults: false
+};
+
+const PER_PAGE = 10;
+
+// ─── Scoring ──────────────────────────────────────────────────────────────────
+function scoreItems(idxArr) {
+  return idxArr.reduce((sum, i) => {
+    const raw = state.answers[i];
+    if (raw === null) return sum;
+    return sum + (REVERSE.has(i) ? 6 - raw : raw);
+  }, 0);
+}
+function computeScores() {
+  return {
+    pi: scoreItems(PI_IDX), pe: scoreItems(PE_IDX), pu: scoreItems(PU_IDX),
+    ci: scoreItems(CI_IDX), ce: scoreItems(CE_IDX), cu: scoreItems(CU_IDX)
+  };
+}
+function avgScore(score) { return (score / 10).toFixed(2); }
+function barPct(score)   { return Math.round(((score - 10) / 40) * 100); }
+function level(score)    { return score < 25 ? 'low' : score < 37 ? 'mod' : 'high'; }
+function levelLabel(l)   { return l === 'low' ? 'Below Average' : l === 'mod' ? 'Average Range' : 'Elevated'; }
+
+const INTERP = {
+  pi: {
+    low:  "You carried relatively few instrumental caregiving responsibilities growing up. Household management, finances, and sibling care were not a primary burden for you.",
+    mod:  "You took on a moderate level of practical household responsibilities during childhood — some caregiving tasks, though not at an unusual degree.",
+    high: "You carried a significant level of instrumental caregiving as a child, including household, financial, or physical caretaking tasks that extended beyond what is developmentally typical."
+  },
+  pe: {
+    low:  "You were not heavily called upon to manage the emotional lives of family members growing up. You did not primarily occupy an emotional caretaking role.",
+    mod:  "At times you served as a confidante, mediator, or emotional support for family members during childhood — a moderate level of expressive caregiving.",
+    high: "You carried substantial emotional caregiving responsibilities during childhood, serving as an emotional anchor, confidante, or conflict mediator in ways that exceeded the typical child role."
+  },
+  pu: {
+    low:  "In retrospect, your childhood family relationships felt reasonably fair and balanced — your giving and receiving were roughly reciprocal.",
+    mod:  "You perceived some imbalance in your childhood family relationships — a sense that your contributions were not always fully acknowledged or returned.",
+    high: "You perceived notable unfairness in your family of origin growing up. Your caregiving did not feel adequately recognized or reciprocated. This perception of imbalance is a key clinical factor in how filial responsibility affects development."
+  },
+  ci: {
+    low:  "You are not currently providing significant practical support to your family of origin. Instrumental caregiving is not a prominent feature of your present family role.",
+    mod:  "You provide a moderate level of practical help to your family of origin — some instrumental caregiving that is present but not consuming.",
+    high: "You are currently providing a high level of instrumental caregiving to your family of origin, managing practical needs in ways that may be substantial and ongoing."
+  },
+  ce: {
+    low:  "You are not currently in a heavily emotionally caretaking role with your family of origin.",
+    mod:  "You serve as emotional support or a sounding board for your family of origin at times — a moderate level of current expressive caregiving.",
+    high: "You are currently carrying significant emotional caregiving responsibilities for your family of origin, feeling responsible for others' wellbeing or serving as the family's primary emotional anchor."
+  },
+  cu: {
+    low:  "Your current family-of-origin relationships feel reasonably reciprocal and fair.",
+    mod:  "You perceive some current imbalance — a sense that your present contributions are not fully recognized or returned by your family of origin.",
+    high: "Your current caregiving feels significantly unreciprocated. There is a notable sense that your contributions go unacknowledged. When elevated alongside caregiving scores, this pattern is clinically significant and warrants exploration with a qualified counselor."
+  }
+};
+
+function getPatterns(s) {
+  const HIGH = 32;
+  const found = [];
+  if (s.pi >= HIGH && s.pu >= HIGH) found.push({ label: 'Past Destructive Instrumental Parentification',    era: 'past' });
+  if (s.pe >= HIGH && s.pu >= HIGH) found.push({ label: 'Past Destructive Expressive Parentification',      era: 'past' });
+  if (s.ci >= HIGH && s.cu >= HIGH) found.push({ label: 'Current Destructive Instrumental Parentification', era: 'curr' });
+  if (s.ce >= HIGH && s.cu >= HIGH) found.push({ label: 'Current Destructive Expressive Parentification',   era: 'curr' });
+  return found;
+}
+
+// ─── Scale legend HTML ────────────────────────────────────────────────────────
+function scaleLegend() {
+  const items = [
+    { val: 1, lbl: 'Strongly<br>Disagree' },
+    { val: 2, lbl: 'Disagree' },
+    { val: 3, lbl: 'Neutral' },
+    { val: 4, lbl: 'Agree' },
+    { val: 5, lbl: 'Strongly<br>Agree' }
+  ];
+  return `
+    <div class="scale-legend">
+      ${items.map(it => `
+        <div class="scale-legend-item">
+          <div class="scale-legend-num">${it.val}</div>
+          <div class="scale-legend-lbl">${it.lbl}</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+function render() {
+  const app = document.getElementById('app');
+  if (state.showResults)    { app.innerHTML = renderResults();    return; }
+  if (state.page === 0)     { app.innerHTML = renderIntro();      return; }
+  if (state.page === 'T')   { app.innerHTML = renderTransition(); return; }
+  if (state.page <= 3)      { app.innerHTML = renderQPage(state.page, 'past');    return; }
+  if (state.page <= 6)      { app.innerHTML = renderQPage(state.page - 3, 'curr'); return; }
+  app.innerHTML = renderDemo();
+  attachDemoListeners();
+}
+
+function renderIntro() {
+  return `
+    <div class="page-eyebrow">Psychometric Assessment</div>
+    <h1>Filial Responsibility Scale &ndash; Adult</h1>
+    <p class="subtitle">Jurkovic &amp; Thirkield (1999) &nbsp;&middot;&nbsp; FRS-A</p>
+
+    <div class="callout">
+      <div class="callout-title">About Parentification</div>
+      <p><em>Parentification</em> refers to a process in which children take on developmentally taxing caregiving responsibilities within their families &mdash; roles ordinarily belonging to adults. These responsibilities take two forms: <strong>instrumental caregiving</strong> (attending to the physical needs of the family, such as caring for siblings, managing finances, or maintaining the household) and <strong>expressive caregiving</strong> (attending to the emotional needs of family members, such as serving as a confidante to a parent, mediating conflict, or managing others&rsquo; distress).</p>
+      <p>Parentification is not inherently harmful. Research suggests that some degree of filial responsibility can foster maturity, competence, and resilience. However, when caregiving occurs without adequate acknowledgment, supervision, or reciprocity &mdash; what researchers call <em>destructive parentification</em> &mdash; it can compromise a child&rsquo;s development and continue to shape family relationships well into adulthood.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">About This Instrument</div>
+      <p>The Filial Responsibility Scale&ndash;Adult (FRS-A) assesses the nature and perceived fairness of both past and present caregiving within your family of origin. <strong>Part 1</strong> asks about your experiences growing up. <strong>Part 2</strong> asks about your current relationship with your family of origin. There are 60 statements in total, each rated on a 5-point scale.</p>
+      <p>Please respond thoughtfully and honestly. There are no right or wrong answers. An optional demographic survey follows, and your results will be available immediately after completion.</p>
+    </div>
+
+    <div style="text-align:center; padding-top:.5rem;">
+      <button class="btn-start" onclick="goNext()">Begin Assessment &rarr;</button>
+    </div>
+  `;
+}
+
+function renderTransition() {
+  return `
+    <div class="transition-card">
+      <div class="t-eyebrow">Part 1 Complete</div>
+      <h2>Now Moving to<br>Present-Day Experiences</h2>
+      <p>You&rsquo;ve finished the childhood section. Part 2 asks about your <em>current</em> relationship with your family of origin &mdash; how things are today.</p>
+    </div>
+
+    <div class="transition-divider">
+      <hr><span>What You&rsquo;ve Completed &amp; What&rsquo;s Next</span><hr>
+    </div>
+
+    <div class="part-summary">
+      <div class="part-summary-card done">
+        <div class="ps-label">&#10003;&nbsp; Completed</div>
+        <div class="ps-title">Part 1: Childhood</div>
+        <p>30 questions about your experiences growing up in your family of origin.</p>
+      </div>
+      <div class="part-summary-card next">
+        <div class="ps-label">&#8594;&nbsp; Up Next</div>
+        <div class="ps-title">Part 2: Present Day</div>
+        <p>30 questions about your current relationship with your family of origin.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">A Note on the Shift</div>
+      <p>The upcoming questions use the present tense and refer to your <em>family of origin</em> &mdash; the family you grew up in. As you read each statement, consider how things are for you <em>now</em>, not how they were when you were a child.</p>
+    </div>
+
+    <div class="btn-row" style="justify-content:flex-end;">
+      <button class="btn-primary" onclick="goNext()">Begin Part 2 &rarr;</button>
+    </div>
+  `;
+}
+
+function renderQPage(partPage, era) {
+  const isPast  = era === 'past';
+  const offset  = isPast ? 0 : 30;
+  const start   = offset + (partPage - 1) * PER_PAGE;
+  const end     = start + PER_PAGE;
+  const rawPage = isPast ? partPage : partPage + 3;
+  // overall progress: 7 total steps (3 past + T + 3 curr + demo = effectively 8 states; use 8 slots)
+  const stepNum = isPast ? partPage : partPage + 4;
+  const pct     = Math.round((stepNum / 8) * 100);
+  const partLabel  = isPast ? 'Part 1 of 2 — Childhood Experiences' : 'Part 2 of 2 — Present-Day Experiences';
+  const pageLabel  = `Page ${partPage} of 3`;
+  const bannerHead = isPast ? 'Looking Back: Growing Up' : 'Present Day: Your Family of Origin Now';
+  const bannerBody = isPast
+    ? 'Rate each statement based on your experiences as a child growing up in your family.'
+    : 'Rate each statement based on your current relationship with your family of origin.';
+
+  let html = `
+    <div class="progress-wrap">
+      <div class="progress-label"><span>${partLabel}</span><span>${pageLabel}</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+
+    <div class="section-banner">
+      <h2>${bannerHead}</h2>
+      <p>${bannerBody}</p>
+    </div>
+
+    ${scaleLegend()}
+  `;
+
+  for (let i = start; i < end; i++) {
+    const displayNum = (i % 30) + 1;
+    html += `
+      <div class="q-item" id="qi-${i}">
+        <div class="q-text"><span class="q-num">${displayNum}.</span>${ALL_Q[i]}</div>
+        <div class="likert">
+    `;
+    for (let v = 1; v <= 5; v++) {
+      const chk = state.answers[i] === v ? 'checked' : '';
+      html += `
+        <label>
+          <input type="radio" name="q${i}" value="${v}" ${chk} onchange="setAnswer(${i},${v})">
+          <div class="btn"><span class="val">${v}</span></div>
+        </label>`;
+    }
+    html += `</div></div>`;
+  }
+
+  const isFirstPage = isPast && partPage === 1;
+  html += `
+    <div id="unans-note" class="unans-note">&#x26A0;&nbsp; Please answer all questions before continuing.</div>
+    <div class="btn-row">
+      ${isFirstPage
+        ? `<span></span>`
+        : `<button class="btn-secondary" onclick="goPrev()">&larr; Back</button>`}
+      <button class="btn-primary" onclick="goNext()">Continue &rarr;</button>
+    </div>
+  `;
+  return html;
+}
+
+function renderDemo() {
+  const d = state.demographics;
+  return `
+    <div class="progress-wrap">
+      <div class="progress-label"><span>About You — Demographic Information</span><span>Almost done</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">About You</div>
+      <p>Please complete the following fields. Required fields are marked with an asterisk (<span style="color:var(--danger)">*</span>). Name and email are optional but needed if you would like to receive your results.</p>
+    </div>
+
+    <!-- Core demographics -->
+    <div class="demo-grid">
+      <div class="field-group">
+        <label>Age range <span style="color:var(--danger)">*</span></label>
+        <select id="d-age">
+          <option value="">Please select…</option>
+          <option value="Under 18"  ${d.age==='Under 18'?'selected':''}>Under 18</option>
+          <option value="18–24"     ${d.age==='18–24'?'selected':''}>18–24</option>
+          <option value="25–34"     ${d.age==='25–34'?'selected':''}>25–34</option>
+          <option value="35–44"     ${d.age==='35–44'?'selected':''}>35–44</option>
+          <option value="45–54"     ${d.age==='45–54'?'selected':''}>45–54</option>
+          <option value="55–64"     ${d.age==='55–64'?'selected':''}>55–64</option>
+          <option value="65+"       ${d.age==='65+'?'selected':''}>65 or older</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Gender identity <span style="color:var(--danger)">*</span></label>
+        <select id="d-gender">
+          <option value="">Please select…</option>
+          <option value="Male"             ${d.gender==='Male'?'selected':''}>Male</option>
+          <option value="Female"           ${d.gender==='Female'?'selected':''}>Female</option>
+          <option value="Non-binary"       ${d.gender==='Non-binary'?'selected':''}>Non-binary / third gender</option>
+          <option value="Self-describe"    ${d.gender==='Self-describe'?'selected':''}>Prefer to self-describe</option>
+        </select>
+      </div>
+      <div class="field-group full">
+        <label>Highest education completed <span style="color:var(--danger)">*</span></label>
+        <select id="d-edu">
+          <option value="">Please select…</option>
+          <option value="High school"  ${d.education==='High school'?'selected':''}>High school / GED</option>
+          <option value="Some college" ${d.education==='Some college'?'selected':''}>Some college</option>
+          <option value="Bachelor's"   ${d.education==="Bachelor's"?'selected':''}>Bachelor&rsquo;s degree</option>
+          <option value="Graduate"     ${d.education==='Graduate'?'selected':''}>Graduate / professional degree</option>
+          <option value="Doctoral"     ${d.education==='Doctoral'?'selected':''}>Doctoral degree</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Birth order <span style="color:var(--danger)">*</span></label>
+        <select id="d-birthorder">
+          <option value="">Please select…</option>
+          <option value="Firstborn"     ${d.birthOrder==='Firstborn'?'selected':''}>Firstborn</option>
+          <option value="Middle child"  ${d.birthOrder==='Middle child'?'selected':''}>Middle child</option>
+          <option value="Last born"     ${d.birthOrder==='Last born'?'selected':''}>Last born</option>
+          <option value="Only child"    ${d.birthOrder==='Only child'?'selected':''}>Only child</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Number of siblings <span style="color:var(--danger)">*</span></label>
+        <select id="d-siblings">
+          <option value="">Please select…</option>
+          <option value="0"  ${d.siblings==='0'?'selected':''}>0 (only child)</option>
+          ${[1,2,3,4,5,6,7,8,9,10,11,12].map(n =>
+            `<option value="${n}" ${d.siblings===String(n)?'selected':''}>${n}</option>`
+          ).join('')}
+          <option value="13+" ${d.siblings==='13+'?'selected':''}>13 or more</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Parental divorce -->
+    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:1rem;">
+      <input type="checkbox" id="d-divorced" ${d.parentsDivorced?'checked':''}
+        style="margin-top:3px;width:18px;height:18px;accent-color:var(--accent);flex-shrink:0;cursor:pointer;"
+        onchange="toggleCustody()">
+      <label for="d-divorced" style="font-size:14px;color:var(--deep);line-height:1.65;cursor:pointer;">
+        My parents were divorced or separated during my childhood.
+      </label>
+    </div>
+    <div class="demo-grid" id="custody-row" style="display:${d.parentsDivorced?'grid':'none'}">
+      <div class="field-group full">
+        <label>Who had primary custody? <span style="color:var(--danger)">*</span></label>
+        <select id="d-custody">
+          <option value="">Please select…</option>
+          <option value="Mother"          ${d.custody==='Mother'?'selected':''}>Mother</option>
+          <option value="Father"          ${d.custody==='Father'?'selected':''}>Father</option>
+          <option value="Shared custody"  ${d.custody==='Shared custody'?'selected':''}>Shared custody</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── Ministry background ── -->
+    <div style="margin-bottom:.6rem;">
+      <span style="font-size:14px;font-weight:600;color:var(--deep);">Ministry background <span style="color:var(--danger)">*</span></span>
+    </div>
+    <p style="font-size:13.5px;color:var(--mid);margin-bottom:.85rem;">Please help me in my research by noting whether you are a ministry professional.</p>
+    <div class="demo-grid">
+      <div class="field-group full">
+        <label>Role</label>
+        <select id="d-ministry" onchange="toggleMinistryOther()">
+          <option value="">Please select one…</option>
+          <option value="Layperson"       ${d.ministry==='Layperson'?'selected':''}>I am a layperson / not a ministry professional</option>
+          <option value="Intern"          ${d.ministry==='Intern'?'selected':''}>Intern / unordained pastor</option>
+          <option value="Ordained"        ${d.ministry==='Ordained'?'selected':''}>Ordained pastor</option>
+          <option value="Ordained-Admin"  ${d.ministry==='Ordained-Admin'?'selected':''}>Ordained pastor serving in an administrative role</option>
+          <option value="Missionary"      ${d.ministry==='Missionary'?'selected':''}>Missionary</option>
+          <option value="Teacher"         ${d.ministry==='Teacher'?'selected':''}>Teacher / professor</option>
+          <option value="Other"           ${d.ministry==='Other'?'selected':''}>Other ministry professional (self-describe)</option>
+        </select>
+      </div>
+      <div class="field-group full" id="ministry-other-row" style="display:${d.ministry==='Other'?'flex':'none'}">
+        <label>Please describe your ministry role</label>
+        <input type="text" id="d-ministry-other" placeholder="Describe your role…" value="${d.ministryOther}">
+      </div>
+      <div class="field-group full">
+        <label>Religious tradition / denomination <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="d-religion" placeholder="e.g. Christian, Jewish, Muslim, None…" value="${d.religion}">
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── Optional contact info ── -->
+    <div style="margin-bottom:.6rem;">
+      <span style="font-size:14px;font-weight:600;color:var(--deep);">Contact information</span>
+    </div>
+    <p style="font-size:13.5px;color:var(--mid);margin-bottom:.85rem;">Name and email are optional but required if you would like to receive your results.</p>
+    <div class="demo-grid">
+      <div class="field-group">
+        <label>Name <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <input type="text" id="d-name" placeholder="Your name" value="${d.name}">
+      </div>
+      <div class="field-group">
+        <label>Your email address <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <input type="email" id="d-email" placeholder="your@email.com" value="${d.email}">
+      </div>
+      <div class="field-group full">
+        <label>Send results to your therapist / counselor / coach <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <input type="email" id="d-therapist" placeholder="therapist@email.com" value="${d.therapistEmail}">
+      </div>
+    </div>
+
+    <div class="callout" style="margin-bottom:1.25rem;">
+      <div class="callout-title">Note on email</div>
+      <p>If you do not complete the email field, your results will not be sent to you. Please print or screenshot the results page to keep a copy.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── Research contact permission ── -->
+    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:1.5rem;">
+      <input type="checkbox" id="d-research" ${d.researchContact?'checked':''}
+        style="margin-top:3px;width:18px;height:18px;accent-color:var(--accent);flex-shrink:0;cursor:pointer;">
+      <label for="d-research" style="font-size:14px;color:var(--deep);line-height:1.65;cursor:pointer;">
+        I give permission for researchers to contact me for a confidential follow-up conversation about my results and personal story. I understand that participation is entirely voluntary.
+      </label>
+    </div>
+
+    <!-- ── Validation error ── -->
+    <div id="demo-error" style="display:none;background:var(--danger-bg);border:1px solid var(--danger-border);border-radius:8px;padding:.75rem 1rem;font-size:13px;color:var(--danger);margin-bottom:1rem;"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goPrev()">&larr; Back</button>
+      <button class="btn-primary" onclick="submitSurvey()">View My Results &rarr;</button>
+    </div>
+  `;
+}
+
+function renderResults() {
+  const s = computeScores();
+  const patterns = getPatterns(s);
+
+  function scoreCard(era, typeName, key, score) {
+    const l   = level(score);
+    const avg = avgScore(score);
+    const pct = barPct(score);
+    return `
+      <div class="score-card">
+        <div class="sc-label">${era}</div>
+        <div class="sc-type">${typeName}</div>
+        <div class="sc-score">${avg}<span> / 5.00</span></div>
+        <div class="sc-bar"><div class="sc-bar-fill fill-${l}" style="width:${pct}%"></div></div>
+        <div class="sc-level level-${l}">${levelLabel(l)}</div>
+        <p class="sc-desc">${INTERP[key][l]}</p>
+      </div>`;
+  }
+
+  let patternHtml = '';
+  if (patterns.length === 0) {
+    patternHtml = `
+      <div class="pattern-card safe">
+        <div class="p-title">No Indicators of Destructive Parentification Detected</div>
+        <p>Your scores do not reflect the combination of elevated caregiving and perceived unfairness that characterizes destructive parentification. This is a meaningful finding. Individual subscale scores may still be worth exploring with a counselor, particularly if any felt personally significant.</p>
+      </div>`;
+  } else {
+    patterns.forEach(pat => {
+      const cls = pat.era === 'curr' ? 'concern' : 'caution';
+      patternHtml += `
+        <div class="pattern-card ${cls}">
+          <div class="p-title">Pattern Detected: ${pat.label}</div>
+          <p>Research by Jurkovic et al. (2001) found that this combination &mdash; elevated caregiving alongside perceived unfairness &mdash; is associated with developmental burden and relational difficulties. Adults from divorced families were found to be twice as likely to show this pattern. Exploring these experiences with a qualified mental health professional can be meaningful and healing work.</p>
+        </div>`;
+    });
+  }
+
+  return `
+    <div class="results-header">
+      <div class="eyebrow">Assessment Complete</div>
+      <h2>Filial Responsibility Scale &ndash; Adult</h2>
+      <div class="meta">Your results across six dimensions of filial responsibility</div>
+    </div>
+
+    <div class="results-section-label">Part 1 &mdash; Childhood Experiences (Past)</div>
+    <div class="score-grid-3">
+      ${scoreCard('Past', 'Instrumental Caregiving', 'pi', s.pi)}
+      ${scoreCard('Past', 'Expressive Caregiving',   'pe', s.pe)}
+      ${scoreCard('Past', 'Perceived Unfairness',    'pu', s.pu)}
+    </div>
+
+    <div class="results-section-label">Part 2 &mdash; Present-Day Experiences (Current)</div>
+    <div class="score-grid-3">
+      ${scoreCard('Current', 'Instrumental Caregiving', 'ci', s.ci)}
+      ${scoreCard('Current', 'Expressive Caregiving',   'ce', s.ce)}
+      ${scoreCard('Current', 'Perceived Unfairness',    'cu', s.cu)}
+    </div>
+
+    <div class="callout" style="margin-top:1.25rem;">
+      <div class="callout-title">How to Read Your Scores</div>
+      <p>Each subscale is displayed as an average per item (1.00&ndash;5.00). Scores below 2.50 are generally considered below average; scores between 2.50 and 3.60 fall in the average range; scores above 3.60 are considered elevated. These thresholds are informed by research norms from Jurkovic et al. (2001).</p>
+      <p>Elevated caregiving scores alone do not indicate a problem. What matters most is the <em>combination</em> of caregiving and unfairness. When both are elevated, this reflects <em>destructive parentification</em> &mdash; caregiving that occurred without adequate acknowledgment or reciprocity. Parentification that is recognized, supported, and fairly reciprocated can foster genuine strength and maturity.</p>
+    </div>
+
+    <div class="clinical-note">
+      <div class="cn-title">Clinical Implications</div>
+      <p>Research suggests that individuals who experienced destructive forms of parentification often carry these patterns into adulthood &mdash; continuing to take on outsized caregiving roles while feeling unseen in those contributions. Because of strong family loyalty, many parentified individuals minimize or conceal the impact of these experiences.</p>
+      <p>Simply acknowledging your caregiving history &mdash; and the complex feelings it evokes &mdash; is a meaningful step. Therapy can provide a space to integrate these experiences, renegotiate family roles, and develop a personal identity that is not wholly defined by a caretaking role. If you are interested in exploring this kind of support, feel free to contact me at <a href="mailto:jarod@finishwellgroup.com" style="color:var(--accent);">jarod@finishwellgroup.com</a> or learn more about our practice at <a href="https://restorationchristiancounseling.net/" target="_blank" style="color:var(--accent);">restorationchristiancounseling.net</a>.</p>
+    </div>
+
+    <div style="text-align:center;">
+      <button class="btn-reset" onclick="resetSurvey()">&#8635;&nbsp; Retake the Assessment</button>
+    </div>
+
+    <p class="disclaimer">
+      <strong>About this instrument:</strong> The Filial Responsibility Scale&ndash;Adult (FRS-A) was developed by Gregory J. Jurkovic, Ph.D. and Alison Thirkield, Ph.D. Its psychometric properties are described in: Jurkovic, G.J., Thirkield, A., &amp; Morrell, R. (2001). Parentification of adult children of divorce: A multidimensional analysis. <em>Journal of Youth and Adolescence, 30</em>(2), 245&ndash;257.
+    </p>
+    <p class="disclaimer">
+      Test content is used for non-commercial clinical and educational purposes in accordance with PsycTESTS usage guidelines. This app uses a number of free services to reduce costs and increase access to the instrument. If something is broken, please let me know: <a href="mailto:jarod@finishwellgroup.com" style="color:var(--accent);">jarod@finishwellgroup.com</a>
+    </p>
+  `;
+}
+
+// ─── Navigation ───────────────────────────────────────────────────────────────
+function setAnswer(i, v) { state.answers[i] = v; }
+
+function goNext() {
+  // Validate current question page before advancing
+  if (state.page !== 'T' && state.page >= 1 && state.page <= 6) {
+    const isPast = state.page <= 3;
+    const partPage = isPast ? state.page : state.page - 3;
+    const offset   = isPast ? 0 : 30;
+    const start    = offset + (partPage - 1) * PER_PAGE;
+    const end      = start + PER_PAGE;
+    const missing  = [];
+    for (let i = start; i < end; i++) {
+      if (state.answers[i] === null) missing.push(i);
+    }
+    if (missing.length > 0) {
+      const note = document.getElementById('unans-note');
+      if (note) note.style.display = 'block';
+      missing.forEach(i => {
+        const el = document.getElementById('qi-' + i);
+        if (el) el.classList.add('unanswered');
+      });
+      return;
+    }
+  }
+
+  // Advance state
+  if (state.page === 3) {
+    state.page = 'T';   // transition page after last childhood page
+  } else if (state.page === 'T') {
+    state.page = 4;     // first current page
+  } else {
+    state.page = (typeof state.page === 'number') ? state.page + 1 : 4;
+  }
+
+  render();
+  window.scrollTo(0, 0);
+}
+
+function goPrev() {
+  if (state.page === 'T') {
+    state.page = 3;
+  } else if (state.page === 4) {
+    state.page = 'T';
+  } else if (typeof state.page === 'number' && state.page > 0) {
+    state.page--;
+  }
+  render();
+  window.scrollTo(0, 0);
+}
+
+function toggleCustody() {
+  const cb  = document.getElementById('d-divorced');
+  const row = document.getElementById('custody-row');
+  if (cb && row) row.style.display = cb.checked ? 'grid' : 'none';
+  if (cb) state.demographics.parentsDivorced = cb.checked;
+}
+
+function toggleMinistryOther() {
+  const sel = document.getElementById('d-ministry');
+  const row = document.getElementById('ministry-other-row');
+  if (sel && row) row.style.display = sel.value === 'Other' ? 'flex' : 'none';
+  if (sel) state.demographics.ministry = sel.value;
+}
+
+function attachDemoListeners() {
+  const fields = [
+    ['d-age',           'age'],
+    ['d-gender',        'gender'],
+    ['d-edu',           'education'],
+    ['d-birthorder',    'birthOrder'],
+    ['d-siblings',      'siblings'],
+    ['d-custody',       'custody'],
+    ['d-religion',      'religion'],
+    ['d-name',          'name'],
+    ['d-email',         'email'],
+    ['d-therapist',     'therapistEmail'],
+    ['d-ministry',      'ministry'],
+    ['d-ministry-other','ministryOther'],
+  ];
+  fields.forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('change', () => { state.demographics[key] = el.value; });
+    el.addEventListener('input',  () => { state.demographics[key] = el.value; });
+  });
+  const cb = document.getElementById('d-research');
+  if (cb) cb.addEventListener('change', () => { state.demographics.researchContact = cb.checked; });
+}
+
+function submitSurvey() {
+  // Save current field values into state before validating
+  const snap = [
+    ['d-age','age'],['d-gender','gender'],['d-edu','education'],
+    ['d-birthorder','birthOrder'],['d-siblings','siblings'],['d-custody','custody'],
+    ['d-religion','religion'],
+    ['d-name','name'],['d-email','email'],['d-therapist','therapistEmail'],
+    ['d-ministry','ministry'],['d-ministry-other','ministryOther'],
+  ];
+  snap.forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el) state.demographics[key] = el.value;
+  });
+  const cb = document.getElementById('d-research');
+  if (cb) state.demographics.researchContact = cb.checked;
+  const dc = document.getElementById('d-divorced');
+  if (dc) state.demographics.parentsDivorced = dc.checked;
+
+  // Validate required fields
+  const required = [
+    { id: 'd-age',        msg: 'Please select your age range.' },
+    { id: 'd-gender',     msg: 'Please select your gender identity.' },
+    { id: 'd-edu',        msg: 'Please select your highest education.' },
+    { id: 'd-birthorder', msg: 'Please select your birth order.' },
+    { id: 'd-siblings',   msg: 'Please select your number of siblings.' },
+    { id: 'd-ministry',   msg: 'Please indicate your ministry background.' },
+    { id: 'd-religion',   msg: 'Please enter your religious tradition or denomination.' },
+  ];
+  // Only require custody if divorced is checked
+  if (dc && dc.checked) {
+    required.push({ id: 'd-custody', msg: 'Please indicate who had primary custody.' });
+  }
+  for (const { id, msg } of required) {
+    const el = document.getElementById(id);
+    if (el && !el.value.trim()) {
+      const err = document.getElementById('demo-error');
+      if (err) { err.textContent = '⚠ ' + msg; err.style.display = 'block'; }
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+  }
+
+  state.showResults = true;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function resetSurvey() {
+  state = {
+    page: 0,
+    answers: new Array(60).fill(null),
+    demographics: {
+      age: '', gender: '', education: '', religion: '',
+      birthOrder: '', siblings: '', parentsDivorced: false, custody: '',
+      name: '', email: '', therapistEmail: '',
+      ministry: '', ministryOther: '', researchContact: false
+    },
+    showResults: false
+  };
+  render();
+  window.scrollTo(0, 0);
+}
+
+render();
+</script>
+</body>
+</html>
