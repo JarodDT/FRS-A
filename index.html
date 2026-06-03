@@ -1078,6 +1078,48 @@ function attachDemoListeners() {
   if (cb) cb.addEventListener('change', () => { state.demographics.researchContact = cb.checked; });
 }
 
+function sendToMake(scores) {
+  const d = state.demographics;
+  const payload = {
+    timestamp:       new Date().toISOString(),
+    // Demographics
+    name:            d.name,
+    email:           d.email,
+    therapistEmail:  d.therapistEmail,
+    age:             d.age,
+    gender:          d.gender,
+    education:       d.education,
+    birthOrder:      d.birthOrder,
+    siblings:        d.siblings,
+    parentsDivorced: d.parentsDivorced,
+    custody:         d.custody,
+    religion:        d.religion,
+    ministry:        d.ministry === 'Other' ? d.ministryOther : d.ministry,
+    researchContact: d.researchContact,
+    // Raw scores (10–50)
+    pi_score:        scores.pi,
+    pe_score:        scores.pe,
+    pu_score:        scores.pu,
+    ci_score:        scores.ci,
+    ce_score:        scores.ce,
+    cu_score:        scores.cu,
+    // Averages per item (1.00–5.00)
+    pi_avg:          (scores.pi / 10).toFixed(2),
+    pe_avg:          (scores.pe / 10).toFixed(2),
+    pu_avg:          (scores.pu / 10).toFixed(2),
+    ci_avg:          (scores.ci / 10).toFixed(2),
+    ce_avg:          (scores.ce / 10).toFixed(2),
+    cu_avg:          (scores.cu / 10).toFixed(2),
+  };
+
+  fetch('https://hook.us2.make.com/cy4vkge9o03c80x4shp7hbbjceiqjfen', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify(payload)
+  }).catch(err => console.warn('Make webhook error:', err));
+  // Errors are caught silently so they never block the results page
+}
+
 function submitSurvey() {
   // Save current field values into state before validating
   const snap = [
@@ -1120,6 +1162,8 @@ function submitSurvey() {
     }
   }
 
+  const scores = computeScores();
+  sendToMake(scores);
   state.showResults = true;
   render();
   window.scrollTo(0, 0);
