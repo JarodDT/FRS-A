@@ -6,6 +6,9 @@
 <title>Filial Responsibility Scale – Adult (FRS-A)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('IUDw_6kkzuGIyzVlJ');</script>
 <style>
 
 /* ===== RESET ===== */
@@ -419,6 +422,20 @@ p:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
+<!-- Hidden form for Netlify Forms bot detection -->
+<form name="frs-a-responses" netlify netlify-honeypot="bot-field" hidden>
+  <input name="timestamp"><input name="name"><input name="email">
+  <input name="therapist_email"><input name="age"><input name="gender">
+  <input name="education"><input name="birth_order"><input name="siblings">
+  <input name="parents_divorced"><input name="custody"><input name="religion">
+  <input name="ministry"><input name="research_contact">
+  <input name="pi_score"><input name="pe_score"><input name="pu_score">
+  <input name="ci_score"><input name="ce_score"><input name="cu_score">
+  <input name="pi_avg"><input name="pe_avg"><input name="pu_avg">
+  <input name="ci_avg"><input name="ce_avg"><input name="cu_avg">
+  <input name="pi_level"><input name="pe_level"><input name="pu_level">
+  <input name="ci_level"><input name="ce_level"><input name="cu_level">
+</form>
 <div class="wrap">
   <div id="app"></div>
 </div>
@@ -1078,46 +1095,78 @@ function attachDemoListeners() {
   if (cb) cb.addEventListener('change', () => { state.demographics.researchContact = cb.checked; });
 }
 
-function sendToMake(scores) {
+// ─── EmailJS init ─────────────────────────────────────────────────────────────
+emailjs.init('IUDw_6kkzuGIyzVlJ');
+
+function levelStr(s) {
+  return s < 25 ? 'Below Average' : s < 37 ? 'Average Range' : 'Elevated';
+}
+
+function sendToNetlify(scores) {
   const d = state.demographics;
-  const payload = {
-    timestamp:       new Date().toISOString(),
-    // Demographics
-    name:            d.name,
-    email:           d.email,
-    therapistEmail:  d.therapistEmail,
-    age:             d.age,
-    gender:          d.gender,
-    education:       d.education,
-    birthOrder:      d.birthOrder,
-    siblings:        d.siblings,
-    parentsDivorced: d.parentsDivorced,
-    custody:         d.custody,
-    religion:        d.religion,
-    ministry:        d.ministry === 'Other' ? d.ministryOther : d.ministry,
-    researchContact: d.researchContact,
-    // Raw scores (10–50)
-    pi_score:        scores.pi,
-    pe_score:        scores.pe,
-    pu_score:        scores.pu,
-    ci_score:        scores.ci,
-    ce_score:        scores.ce,
-    cu_score:        scores.cu,
-    // Averages per item (1.00–5.00)
-    pi_avg:          (scores.pi / 10).toFixed(2),
-    pe_avg:          (scores.pe / 10).toFixed(2),
-    pu_avg:          (scores.pu / 10).toFixed(2),
-    ci_avg:          (scores.ci / 10).toFixed(2),
-    ce_avg:          (scores.ce / 10).toFixed(2),
-    cu_avg:          (scores.cu / 10).toFixed(2),
+  const body = new URLSearchParams({
+    'form-name':      'frs-a-responses',
+    timestamp:        new Date().toISOString(),
+    name:             d.name,
+    email:            d.email,
+    therapist_email:  d.therapistEmail,
+    age:              d.age,
+    gender:           d.gender,
+    education:        d.education,
+    birth_order:      d.birthOrder,
+    siblings:         d.siblings,
+    parents_divorced: d.parentsDivorced ? 'Yes' : 'No',
+    custody:          d.custody,
+    religion:         d.religion,
+    ministry:         d.ministry === 'Other' ? d.ministryOther : d.ministry,
+    research_contact: d.researchContact ? 'Yes' : 'No',
+    pi_score:         scores.pi,  pe_score: scores.pe,  pu_score: scores.pu,
+    ci_score:         scores.ci,  ce_score: scores.ce,  cu_score: scores.cu,
+    pi_avg:           (scores.pi/10).toFixed(2), pe_avg: (scores.pe/10).toFixed(2),
+    pu_avg:           (scores.pu/10).toFixed(2), ci_avg: (scores.ci/10).toFixed(2),
+    ce_avg:           (scores.ce/10).toFixed(2), cu_avg: (scores.cu/10).toFixed(2),
+    pi_level:         levelStr(scores.pi), pe_level: levelStr(scores.pe),
+    pu_level:         levelStr(scores.pu), ci_level: levelStr(scores.ci),
+    ce_level:         levelStr(scores.ce), cu_level: levelStr(scores.cu),
+  }).toString();
+
+  fetch('/', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body
+  }).catch(err => console.warn('Netlify Forms error:', err));
+}
+
+function sendEmail(scores) {
+  const d = state.demographics;
+  if (!d.email && !d.therapistEmail) return;
+
+  const params = {
+    to_name:         d.name || 'there',
+    to_email:        d.email,
+    therapist_email: d.therapistEmail,
+    pi_avg:    (scores.pi/10).toFixed(2), pe_avg: (scores.pe/10).toFixed(2),
+    pu_avg:    (scores.pu/10).toFixed(2), ci_avg: (scores.ci/10).toFixed(2),
+    ce_avg:    (scores.ce/10).toFixed(2), cu_avg: (scores.cu/10).toFixed(2),
+    pi_level:  levelStr(scores.pi), pe_level: levelStr(scores.pe),
+    pu_level:  levelStr(scores.pu), ci_level: levelStr(scores.ci),
+    ce_level:  levelStr(scores.ce), cu_level: levelStr(scores.cu),
+    clinical_note: 'Research suggests that individuals who experienced destructive forms of parentification often carry these patterns into adulthood. Simply acknowledging your caregiving history is a meaningful step. If you would like to explore this further, therapy can provide a space to integrate these experiences and develop a fuller sense of self.'
   };
 
-  fetch('https://hook.us2.make.com/cy4vkge9o03c80x4shp7hbbjceiqjfen', {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify(payload)
-  }).catch(err => console.warn('Make webhook error:', err));
-  // Errors are caught silently so they never block the results page
+  // Send to respondent
+  if (d.email) {
+    emailjs.send('service_b1yzgua', 'template_1ed8yv1', params)
+      .catch(err => console.warn('EmailJS error:', err));
+  }
+  // Send copy to therapist
+  if (d.therapistEmail) {
+    emailjs.send('service_b1yzgua', 'template_1ed8yv1', {
+      ...params,
+      to_name:  d.name ? `${d.name}'s counselor` : 'Counselor',
+      to_email: d.therapistEmail
+    }).catch(err => console.warn('EmailJS therapist error:', err));
+  }
 }
 
 function submitSurvey() {
@@ -1163,7 +1212,8 @@ function submitSurvey() {
   }
 
   const scores = computeScores();
-  sendToMake(scores);
+  sendToNetlify(scores);
+  sendEmail(scores);
   state.showResults = true;
   render();
   window.scrollTo(0, 0);
