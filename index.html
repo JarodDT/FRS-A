@@ -423,7 +423,7 @@ p:last-child { margin-bottom: 0; }
 </head>
 <body>
 <!-- Hidden form for Netlify Forms bot detection -->
-<form name="frs-a-responses" netlify netlify-honeypot="bot-field" hidden>
+<form name="frs-a-responses" netlify data-netlify="true" netlify-honeypot="bot-field" style="display:none">
   <input name="timestamp"><input name="name"><input name="email">
   <input name="therapist_email"><input name="age"><input name="gender">
   <input name="education"><input name="birth_order"><input name="siblings">
@@ -435,6 +435,7 @@ p:last-child { margin-bottom: 0; }
   <input name="ci_avg"><input name="ce_avg"><input name="cu_avg">
   <input name="pi_level"><input name="pe_level"><input name="pu_level">
   <input name="ci_level"><input name="ce_level"><input name="cu_level">
+  <button type="submit">Submit</button>
 </form>
 <div class="wrap">
   <div id="app"></div>
