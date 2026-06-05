@@ -1143,48 +1143,35 @@ function sendEmail(scores) {
 
   const name = d.name || 'there';
   const avg  = s => (s/10).toFixed(2);
+  const pct  = s => Math.round(((s-10)/40)*100);
   const lbl  = s => s < 25 ? 'Below Average' : s < 37 ? 'Average Range' : 'Elevated';
-
-  const message =
-`Thank you for completing the Filial Responsibility Scale – Adult (FRS-A). Here is a summary of your results:
-
-PART 1 — CHILDHOOD EXPERIENCES (PAST)
-  Instrumental Caregiving:   ${avg(scores.pi)} / 5.00  (${lbl(scores.pi)})
-  Expressive Caregiving:     ${avg(scores.pe)} / 5.00  (${lbl(scores.pe)})
-  Perceived Unfairness:      ${avg(scores.pu)} / 5.00  (${lbl(scores.pu)})
-
-PART 2 — PRESENT-DAY EXPERIENCES (CURRENT)
-  Instrumental Caregiving:   ${avg(scores.ci)} / 5.00  (${lbl(scores.ci)})
-  Expressive Caregiving:     ${avg(scores.ce)} / 5.00  (${lbl(scores.ce)})
-  Perceived Unfairness:      ${avg(scores.cu)} / 5.00  (${lbl(scores.cu)})
-
-HOW TO READ YOUR SCORES
-Scores are displayed as an average per item on a 1.00–5.00 scale. Below 2.50 is below average; 2.50–3.60 is the average range; above 3.60 is elevated. Elevated caregiving alongside elevated unfairness may reflect a pattern researchers call destructive parentification — caregiving that occurred without adequate acknowledgment or reciprocity.
-
-CLINICAL NOTE
-Simply acknowledging your caregiving history — and the complex feelings it evokes — is a meaningful step. If you are interested in exploring this further with a trained therapist, feel free to reach out at jarod@finishwellgroup.com or learn more at restorationchristiancounseling.net.
-
-— Jarod
-Restoration Christian Counseling`;
+  const clr  = s => s < 25 ? '#4A7C59' : s < 37 ? '#9C6B2E' : '#B03030';
+  const desc = (key, score) => INTERP[key][score < 25 ? 'low' : score < 37 ? 'mod' : 'high'];
 
   const params = {
-    to_name:  name,
-    to_email: d.email,
-    message
+    to_name:   name,
+    to_email:  d.email,
+    pi_avg: avg(scores.pi), pe_avg: avg(scores.pe), pu_avg: avg(scores.pu),
+    ci_avg: avg(scores.ci), ce_avg: avg(scores.ce), cu_avg: avg(scores.cu),
+    pi_level: lbl(scores.pi), pe_level: lbl(scores.pe), pu_level: lbl(scores.pu),
+    ci_level: lbl(scores.ci), ce_level: lbl(scores.ce), cu_level: lbl(scores.cu),
+    pi_color: clr(scores.pi), pe_color: clr(scores.pe), pu_color: clr(scores.pu),
+    ci_color: clr(scores.ci), ce_color: clr(scores.ce), cu_color: clr(scores.cu),
+    pi_pct: pct(scores.pi),   pe_pct: pct(scores.pe),   pu_pct: pct(scores.pu),
+    ci_pct: pct(scores.ci),   ce_pct: pct(scores.ce),   cu_pct: pct(scores.cu),
+    pi_desc: desc('pi', scores.pi), pe_desc: desc('pe', scores.pe), pu_desc: desc('pu', scores.pu),
+    ci_desc: desc('ci', scores.ci), ce_desc: desc('ce', scores.ce), cu_desc: desc('cu', scores.cu),
   };
 
-  // Send to respondent
   if (d.email) {
     emailjs.send('service_b1yzgua', 'template_1ed8yv1', params)
       .catch(err => console.warn('EmailJS error:', err));
   }
-
-  // Send copy to therapist
   if (d.therapistEmail) {
     emailjs.send('service_b1yzgua', 'template_1ed8yv1', {
+      ...params,
       to_name:  d.name ? `${d.name}'s counselor` : 'Counselor',
-      to_email: d.therapistEmail,
-      message
+      to_email: d.therapistEmail
     }).catch(err => console.warn('EmailJS therapist error:', err));
   }
 }
